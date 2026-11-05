@@ -6,6 +6,8 @@ Claude Code ends its turn as `done` even while its `run_in_background` shells ar
 
 ![Agent Waiting](agent-waiting/preview.png)
 
+[Example: an agent watching a dev server](agent-waiting/examples/dev-server.md), a recorded run with two background monitors.
+
 ## Install
 
 Ask an agent in Herdr to add `github.com/zztalker/herdr-agent-waiting-mod/tree/main/agent-waiting`, or follow [Use it](agent-waiting/RECIPE.md#use-it). In short:

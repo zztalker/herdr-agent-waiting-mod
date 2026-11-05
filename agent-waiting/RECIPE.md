@@ -4,6 +4,8 @@ Herdr's agents list, with one more state: **Waiting**. Claude Code ends its turn
 
 ![Agent Waiting](preview.png)
 
+A recorded run, an agent with two monitoring scripts in the background: [examples/dev-server.md](examples/dev-server.md).
+
 ## Use it
 
 It takes three pieces. The mod draws the state; the hook and `hc report` feed it.
@@ -50,7 +52,7 @@ The shipped `agents` mod as it is (sections, cards, sort menu, pins, narrow rail
 
 - **working:** yellow spinner, in Working. **blocked:** `Needs you`, at the top. **done:** blue dot, in Done until you look at it. **idle:** grey ring, dimmed name.
 - **waiting:** an agent whose own status is `idle` and that has a 7501 child record `bg` in state `working`. A `done` agent stays done whatever its records say: a finish is news until seen.
-- **The usual life of a Claude Code turn with a background shell:** Claude reports `done` and the hook reports `bg`: Done. You look at it: Herdr turns it idle, so it is Waiting (while you stay on it, it stays in Done, like any done agent you're looking at; it moves when you leave). The shell ends, the hook clears `bg`: Idle. Claude starts a new turn: Working, with `bg` kept until that turn's end decides again.
+- **The usual life of a Claude Code turn with a background shell:** Claude reports `done` and the hook reports `bg`: Done. You open it: Herdr marks it seen and idle, so it is Waiting. (An agent that finishes while you are already on it stays under Done until you leave it, as in the shipped list.) The shell ends, the hook clears `bg`: Idle. Claude starts a new turn: Working, with `bg` kept until that turn's end decides again.
 - Clicks, keys, hovers, pins, sort and navigation order are the shipped mod's; waiting agents take part in them like any other.
 
 ## Built from
@@ -60,7 +62,7 @@ The shipped `agents` mod as it is (sections, cards, sort menu, pins, narrow rail
   - `waits(status, terminal)`: `status === "idle"` and `terminal.records.bg.state === "working"`;
   - in `render`, `terminals()` is read first and indexed by `address`; each `agents()` entry that `waits` gets `status: "waiting"` before anything else sees the list;
   - `kidStatus` applies `waits` to the word a sub-agent displays;
-  - `hold` / `rank` treat `waiting` like `idle`, so a done agent you are looking at stays in Done until you leave it;
+  - `hold` / `rank` treat `waiting` like `idle`, so an agent that finishes while you are looking at it stays in Done until you leave it;
   - `status()` draws the waiting spinner.
 - **Data:** `agents()` (status words) and `terminals()` (each terminal as core describes it, including its 7501 `records`). Records of terminals on other machines come through the same way.
 - **Hook:** `hooks/claude-code/herdr-background-waiting-hook.sh`, a Claude Code `Stop` hook. It runs only inside a Herdr terminal (`HC_TERMINAL_ID`), finds the session's file in `~/.claude/sessions/` by `session_id`, and reads its `status`: `shell` means the turn is over and a background shell is alive. Then it runs `hc report state=working:id=bg` and leaves a detached watcher that polls the file every 2 s (`HERDR_BACKGROUND_WAITING_POLL`) and runs `hc report state=clear:id=bg` once the session is idle again or gone. One watcher per terminal; each Stop takes over from the previous one. It never writes the agent's own status.
@@ -81,5 +83,5 @@ The shipped `agents` mod as it is (sections, cards, sort menu, pins, narrow rail
 - `herdr-app check ~/.config/herdr-app/mods/agents-waiting` passes, and `herdr-app status` shows no errors with the layout using it.
 - Without any `bg` record, the list looks exactly like the shipped one.
 - On an idle agent `t5`, `hc report state=working:id=bg --terminal t5` moves it to **Waiting** within a second; `hc report state=clear:id=bg --terminal t5` moves it back to **Idle**.
-- On a `done` agent you haven't looked at, the same report leaves it in **Done**; after you look at it and leave, it is in **Waiting**.
+- On a `done` agent you haven't looked at, the same report leaves it in **Done**; once you open it, it is in **Waiting**.
 - In Claude Code, `sleep 120` with `run_in_background`, then end the turn: Done, then Waiting once seen, then Idle about 2 s after the sleep ends. `hc get <agent>` shows `records.bg` while it waits.
