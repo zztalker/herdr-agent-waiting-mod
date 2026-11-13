@@ -14,7 +14,7 @@ Cursor Agent CLI reports no status at all (no OSC 7501), so Herdr shows a Cursor
 
 Ask an agent in Herdr to add `github.com/zztalker/herdr-agent-waiting-mod/tree/main/agent-waiting`, or follow [Use it](agent-waiting/RECIPE.md#use-it). In short:
 
-1. An hc with `hc report`: [herdrdev/herdr-core#81](https://github.com/herdrdev/herdr-core/pull/81), not released yet. Until then: [herdr-core 0.1.19 + hc report](https://github.com/zztalker/herdr-core/releases/tag/0.1.19-report.1) (Linux, macOS, Windows).
+1. An hc with `hc report`: [herdrdev/herdr-core#81](https://github.com/herdrdev/herdr-core/pull/81), not released yet. Until then: [herdr-core 0.1.21 + hc report](https://github.com/zztalker/herdr-core/releases/tag/0.1.21-report.1) (Linux, macOS, Windows).
 2. The hooks, on every machine where Claude Code or Cursor runs: `sh agent-waiting/hooks/install.sh` installs the hook of each agent it finds (`--uninstall` removes them). On Windows (Cursor only): `powershell -NoProfile -ExecutionPolicy Bypass -File agent-waiting\hooks\install.ps1`. Both say so if hc has no `hc report`.
 3. The mod: copy `agent-waiting/mods/agents-waiting/` to `~/.config/herdr-app/mods/` and point your layout's agents block at `agents-waiting`.
 

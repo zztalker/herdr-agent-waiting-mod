@@ -8,7 +8,7 @@
 # report nothing, and this says so at the end.
 set -u
 here=$(cd "$(dirname "$0")" && pwd)
-release=https://github.com/zztalker/herdr-core/releases/tag/0.1.19-report.1
+release=https://github.com/zztalker/herdr-core/releases/tag/0.1.21-report.1
 
 if [ "${1:-}" != --uninstall ]; then
   HERDR_HC=${HERDR_HC:-$(command -v hc || true)}

@@ -12,7 +12,7 @@ A recorded run, an agent with two monitoring scripts in the background: [example
 
 It takes three pieces. The mod draws the state; the hook and `hc report` feed it.
 
-1. **An hc with `hc report`.** The hooks report through it: `hc report state=working:id=bg` for Claude Code's background shells, `hc report state=working:app=cursor` for Cursor. That command is in [herdrdev/herdr-core#81](https://github.com/herdrdev/herdr-core/pull/81), not yet in a herdr-core release. Until it is, use the build of that branch: [herdr-core 0.1.19 + hc report](https://github.com/zztalker/herdr-core/releases/tag/0.1.19-report.1) (Linux, macOS and Windows, unofficial; its notes have the Windows steps):
+1. **An hc with `hc report`.** The hooks report through it: `hc report state=working:id=bg` for Claude Code's background shells, `hc report state=working:app=cursor` for Cursor. That command is in [herdrdev/herdr-core#81](https://github.com/herdrdev/herdr-core/pull/81), not yet in a herdr-core release. Until it is, use the build of that branch: [herdr-core 0.1.21 + hc report](https://github.com/zztalker/herdr-core/releases/tag/0.1.21-report.1) (Linux, macOS and Windows, unofficial; its notes have the Windows steps):
 
    ```sh
    tar -xzf herdr-core-<platform>.tar.gz
@@ -20,7 +20,7 @@ It takes three pieces. The mod draws the state; the hook and `hc report` feed it
    hc update --from './Herdr Core.app'        # macOS
    ```
 
-   It still says `hc 0.1.19`. `hc update` and `hc machine update` bring back the official build, without `hc report`; on another machine, copy the Linux `herdr-core` to its `~/.local/bin/` and run `herdr-core server restart` there instead. Running terminals keep running either way. Check with `hc report --help`.
+   It still says `hc 0.1.21`. `hc update` and `hc machine update` bring back the official build, without `hc report`; on another machine, copy the Linux `herdr-core` to its `~/.local/bin/` and run `herdr-core server restart` there instead. Running terminals keep running either way. Check with `hc report --help`.
 2. **The hooks**, on every machine where Claude Code or Cursor runs (this computer and each machine from `hc machine ls`). One installer puts in the hook of each agent it finds there (`~/.claude` or `claude`; `~/.cursor` or `cursor-agent`) and skips the rest. It needs `jq`.
 
    ```sh

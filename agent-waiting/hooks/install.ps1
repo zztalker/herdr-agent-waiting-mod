@@ -13,7 +13,7 @@
 # hook is installed but reports nothing, and this says so.
 param([switch]$Uninstall)
 $ErrorActionPreference = "Stop"
-$release = "https://github.com/zztalker/herdr-core/releases/tag/0.1.19-report.1"
+$release = "https://github.com/zztalker/herdr-core/releases/tag/0.1.21-report.1"
 $src = Join-Path (Join-Path $PSScriptRoot "cursor") "status-hook.ps1"
 $dir = if ($env:CURSOR_CONFIG_DIR) { $env:CURSOR_CONFIG_DIR } else { Join-Path $HOME ".cursor" }
 $hook = Join-Path $dir "herdr-status-hook.ps1"
