@@ -82,6 +82,7 @@ try {
     $out = Install $old
     if ($script:code -eq 0 -and (Test-Path $hook)) { Ok "old hc: still installs" } else { Fail "old hc: still installs" "exit $($script:code): $out" }
     if ($out -match "(?s)WARNING.*hc report.*herdr-core/releases") { Ok "old hc: warns, with where to get it" } else { Fail "old hc: warns, with where to get it" $out }
+    if ($out -notmatch "releases/tag/" -and $out -match "zztalker/herdr-core/releases" -and $out -match "-report\.1") { Ok "old hc: points to the releases page, not a tag" } else { Fail "old hc: points to the releases page, not a tag" $out }
     Install $hc "-Uninstall" | Out-Null
 
     # 6. No hc: refuses, changes nothing.

@@ -13,7 +13,8 @@
 # hook is installed but reports nothing, and this says so.
 param([switch]$Uninstall)
 $ErrorActionPreference = "Stop"
-$release = "https://github.com/zztalker/herdr-core/releases/tag/0.1.21-report.1"
+# The fork publishes each build as a prerelease, so not /releases/latest.
+$release = "https://github.com/zztalker/herdr-core/releases"
 $src = Join-Path (Join-Path $PSScriptRoot "cursor") "status-hook.ps1"
 $dir = if ($env:CURSOR_CONFIG_DIR) { $env:CURSOR_CONFIG_DIR } else { Join-Path $HOME ".cursor" }
 $hook = Join-Path $dir "herdr-status-hook.ps1"
@@ -94,7 +95,7 @@ if (-not $hasReport) {
     Write-Output ""
     Write-Output "WARNING: $hc has no 'hc report', so the hook reports nothing yet."
     Write-Output "'hc report' is in herdr-core#81 (https://github.com/herdrdev/herdr-core/pull/81),"
-    Write-Output "not in a herdr-core release. Until it is, install a build with it:"
+    Write-Output "not in a herdr-core release. Until it is, install the newest *-report.1 build from:"
     Write-Output "  $release"
     Write-Output "Then check with: hc report --help"
 }

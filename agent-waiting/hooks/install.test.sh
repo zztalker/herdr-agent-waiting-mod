@@ -41,6 +41,11 @@ out=$(run "$tmp/bin" --uninstall); code=$?
 fresh .cursor .claude; out=$(run "$tmp/old"); code=$?
 [ $code -eq 0 ] && cursor_in && claude_in && ok "old hc: hooks installed" || fail "old hc: hooks installed" "exit $code: $out"
 case $out in *"WARNING"*"hc report"*"herdr-core/releases"*) ok "old hc: warns, with where to get it" ;; *) fail "old hc: warns, with where to get it" "$out" ;; esac
+# The releases page, not one tag: the warning stays right after each new build.
+case $out in *"releases/tag/"*) pinned=1 ;; *) pinned=0 ;; esac
+case $out in *"zztalker/herdr-core/releases"*) page=1 ;; *) page=0 ;; esac
+case $out in *"-report.1"*) which=1 ;; *) which=0 ;; esac
+[ "$pinned$page$which" = 011 ] && ok "old hc: points to the releases page, not a tag" || fail "old hc: points to the releases page, not a tag" "$out"
 
 # No agent at all: nothing to do, said plainly.
 fresh; out=$(run "$tmp/bin"); code=$?

@@ -8,7 +8,8 @@
 # report nothing, and this says so at the end.
 set -u
 here=$(cd "$(dirname "$0")" && pwd)
-release=https://github.com/zztalker/herdr-core/releases/tag/0.1.21-report.1
+# The fork publishes each build as a prerelease, so not /releases/latest.
+release=https://github.com/zztalker/herdr-core/releases
 
 if [ "${1:-}" != --uninstall ]; then
   HERDR_HC=${HERDR_HC:-$(command -v hc || true)}
@@ -37,7 +38,7 @@ if [ -z "$ARG" ] && [ "$found" = 1 ] && ! "$HERDR_HC" report --help >/dev/null 2
 
 WARNING: $HERDR_HC has no 'hc report', so these hooks report nothing yet.
 'hc report' is in herdr-core#81 (https://github.com/herdrdev/herdr-core/pull/81),
-not in a herdr-core release. Until it is, install a build with it:
+not in a herdr-core release. Until it is, install the newest *-report.1 build from:
   $release
 Then check with: hc report --help
 EOF
